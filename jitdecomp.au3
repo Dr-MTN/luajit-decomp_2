@@ -692,12 +692,12 @@ Func handleOp($f,$p1,$p2,$p3,$c,$h,$c2)
     ElseIf $f = "UCLO" Then
         
     ElseIf $f = "TNEW" Then
-        $filo[$p1] = "var_" & $fNo & "_" & $p1
-        FileWriteLine($out,"var_" & $fNo & "_" & $p1 & " = {}")
+        $filo[$p1] = "tb_" & $fNo & "_" & $p1
+        FileWriteLine($out,"tb_" & $fNo & "_" & $p1 & " = {}")
         
     ElseIf $f = "TDUP" Then
-        $filo[$p1] = "var_" & $fNo & "_" & $p1
-        FileWriteLine($out,"var_" & $fNo & "_" & $p1 & " = {} --to find out the contents of this table look inside the lua file")
+        $filo[$p1] = "tb_" & $fNo & "_" & $p1
+        FileWriteLine($out,"tb_" & $fNo & "_" & $p1 & " = {} --to find out the contents of this table look inside the lua file")
         
     ElseIf $f = "TSETB" Then
         FileWriteLine($out,$filo[$p2] & "[" & $p3 & "] = " & $filo[$p1])
