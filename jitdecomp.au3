@@ -145,7 +145,9 @@ Func decompfile($filepath,$asmpath,$savepath1,$savepath2)
     $out = FileOpen($savepath2,2)
     for $func in $faa
         for $line in $func
-           FileWriteLine($out, StringReplace($line,"	","    "))
+            $str = StringReplace($line,"	","    ")
+            $str = StringReplace($str,"@input_","input")
+            FileWriteLine($out, $str)
         Next
         FileWriteLine($out,"")
     Next
@@ -160,19 +162,11 @@ Func handleLine($l)
         FileWriteLine($out,"")
     ElseIf $header = "-- B" Then                ;check for new function start
         FileWriteLine($out,$l)
-        FileWriteLine($out,"function someFunc" & $fNo+1 & "()")
+        FileWriteLine($out,"function dosomething" & $fNo+1 & "()")
         Dim $fi2[100]
-        $fi2[0] = "INPUT_VAR_0_"
-        $fi2[1] = "INPUT_VAR_1_"
-        $fi2[2] = "INPUT_VAR_2_"
-        $fi2[3] = "INPUT_VAR_3_"
-        $fi2[4] = "INPUT_VAR_4_"
-        $fi2[5] = "INPUT_VAR_5_"
-        $fi2[6] = "INPUT_VAR_6_"
-        $fi2[7] = "INPUT_VAR_7_"
-        $fi2[8] = "INPUT_VAR_8_"
-        $fi2[9] = "INPUT_VAR_9_"
-        $fi2[10] = "INPUT_VAR_10_"
+        For $i=0 to UBound($fi2)-1
+            $fi2[$i] = "@input_" & $i
+        Next
         $filo = $fi2
         Dim $jmps2[1]
         $jmps = $jmps2
@@ -911,14 +905,14 @@ Func fixup()
         Dim $maxInVar = -1
         $func = $faa[$fi]
         for $li = 0 to UBound($func)-1
-            If StringInStr($func[$li],"INPUT_VAR_") Then
-                $tmp = StringSplit($func[$li],"INPUT_VAR_",1)
+            If StringInStr($func[$li],"@input_") Then
+                $tmp = StringSplit($func[$li],"@input_",1)
                 $tmp = StringSplit($tmp[2],"_")
                 $maxInVar = _Max(Number($tmp[1]),$maxInVar)
             EndIf
         Next
         For $i = 0 to $maxInVar
-            $func[0] = StringLeft($func[0],StringLen($func[0])-1) & "INPUT_VAR_" & $i & "_,)"
+            $func[0] = StringLeft($func[0],StringLen($func[0])-1) & "@input_" & $i & ",)"
         Next
         If StringRight($func[0],2) = ",)" Then $func[0] = StringLeft($func[0],StringLen($func[0])-2) & ")"
         $faa[$fi] = $func
