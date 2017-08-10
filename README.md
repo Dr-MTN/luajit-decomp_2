@@ -12,3 +12,10 @@ Things that still need to be added:
 * uget lookups (if thats possible?)
 
 By using this you agree that you will not modify anything for malicious purposes, or redistribute source code (decompiled or not) of anything using LuaJIT
+
+addition：
+First Install autoit by autoit-v3-setup.exe
+add your lua file to data/luajit
+run jitdecomp.au3
+
+if your jit version is not 2.1b2,compile jit and copy lua51.dll,luajit.exe,jit foler to root folder
